@@ -102,7 +102,7 @@ export default function WordConnectionDemo() {
       <motion.div
         animate={shake ? { x: [-8, 8, -6, 6, 0] } : { x: 0 }}
         transition={{ duration: 0.4 }}
-        role="grid"
+        role="group"
         aria-label="Word search grid"
       >
         <div
@@ -118,9 +118,7 @@ export default function WordConnectionDemo() {
               return (
                 <motion.button
                   key={key}
-                  role="gridcell"
-                  aria-label={`Letter ${letter}, row ${r + 1}, column ${c + 1}`}
-                  aria-pressed={isSelected}
+                  aria-label={`${isSelected ? 'Selected: ' : ''}Letter ${letter}, row ${r + 1}, column ${c + 1}`}
                   className="w-11 h-11 rounded-lg font-bold text-base font-heading relative overflow-hidden border transition-colors duration-200"
                   style={{
                     backgroundColor: bg !== 'transparent' ? bg + '33' : 'rgba(255,255,255,0.05)',

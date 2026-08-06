@@ -89,12 +89,12 @@ export default function Footer() {
 
         {/* Divider */}
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-gray-600">
+          <p className="text-xs text-gray-400">
             © {new Date().getFullYear()} SUJY Games. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <a href="#" className="text-xs text-gray-600 hover:text-[#D4AF37] transition-colors">Privacy Policy</a>
-            <a href="#" className="text-xs text-gray-600 hover:text-[#D4AF37] transition-colors">Terms of Service</a>
+            <a href="#" className="text-xs text-gray-400 hover:text-[#D4AF37] transition-colors">Privacy Policy</a>
+            <a href="#" className="text-xs text-gray-400 hover:text-[#D4AF37] transition-colors">Terms of Service</a>
           </div>
         </div>
       </div>

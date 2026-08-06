@@ -55,7 +55,7 @@ export default function JigsawDemo() {
       <div
         className="relative grid gap-1 bg-[#071022] rounded-xl p-2 border border-white/10"
         style={{ gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)`, width: '240px', height: '240px' }}
-        role="grid"
+        role="group"
         aria-label="Jigsaw puzzle grid"
       >
         {pieces.map((pieceId, slotIndex) => {
@@ -67,8 +67,7 @@ export default function JigsawDemo() {
           return (
             <motion.div
               key={`slot-${slotIndex}`}
-              role="gridcell"
-              aria-label={`Slot ${slotIndex + 1}, piece ${pieceId + 1}${isCorrect ? ', correct position' : ''}`}
+              aria-label={`Puzzle piece ${slotIndex + 1}${isCorrect ? ' — correct position' : ''}`}
               draggable
               onDragStart={() => handleDragStart(slotIndex)}
               onDragOver={(e) => e.preventDefault()}

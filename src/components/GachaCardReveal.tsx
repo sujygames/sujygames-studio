@@ -107,7 +107,7 @@ export default function GachaCardReveal() {
                 }}
                 onClick={handleUnlock}
                 role="button"
-                aria-label={isFlipped ? `${card.name} card revealed. Click for next.` : 'Click to reveal card'}
+                aria-label={isFlipped ? `${card.name} card revealed. Tap for next card.` : 'Tap to Reveal card'}
                 tabIndex={0}
                 onKeyDown={(e) => e.key === 'Enter' && handleUnlock()}
               >
