@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const GRID_SIZE = 3;
 const TOTAL_PIECES = GRID_SIZE * GRID_SIZE;
-const IMAGE_SRC = '/feature1.png'; // Words of Bible screenshot
+const IMAGE_SRC = '/jigsaw_noahs_ark.png'; // 1:1 square biblical scene — Noah's Ark
 
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr];
@@ -87,7 +87,7 @@ export default function JigsawDemo() {
                 style={{
                   backgroundImage: `url(${IMAGE_SRC})`,
                   backgroundSize: `${GRID_SIZE * 100}%`,
-                  backgroundPosition: `${col * 50}% ${row * 50}%`,
+                  backgroundPosition: `${col * (100 / (GRID_SIZE - 1))}% ${row * (100 / (GRID_SIZE - 1))}%`,
                 }}
               />
             </motion.div>

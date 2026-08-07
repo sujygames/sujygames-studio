@@ -50,8 +50,8 @@ export default function AboutSection() {
               family-friendly mobile experiences that resonate on a deeper level.
             </p>
             <p className="text-gray-500 leading-relaxed mb-8">
-              We combine standard puzzle frameworks with meaningful cultural themes — drawing from Hindu mythology,
-              biblical scripture, and world heritage — to provide an oasis of calm and joy in the bustling mobile
+              We combine intuitive puzzle frameworks with meaningful biblical themes — drawing from scripture,
+              Christian heritage, and stories of faith — to provide an oasis of peace and joy in the bustling mobile
               gaming landscape.
             </p>
 

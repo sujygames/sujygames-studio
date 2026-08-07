@@ -149,13 +149,13 @@ export default function GamesShowcase() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              aria-label="Devlok Jigpuzzle demo"
+              aria-label="Biblical Jigpuzzle demo"
             >
               <div className="inline-block px-3 py-1 mb-4 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/30 text-[#D4AF37] text-xs font-bold tracking-widest uppercase">
-                🧩 Devlok Jigpuzzle
+                🧩 Biblical Jigpuzzle
               </div>
               <h3 className="text-xl font-heading font-bold text-white mb-2">Drag & Drop Puzzle</h3>
-              <p className="text-gray-400 text-sm mb-6">Rearrange the pieces to complete the scene. Drag tiles between slots!</p>
+              <p className="text-gray-400 text-sm mb-6">Rearrange the pieces to complete the biblical scene. Drag tiles between slots!</p>
               <JigsawDemo />
             </motion.div>
 

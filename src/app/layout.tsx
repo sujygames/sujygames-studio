@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   title: 'SUJY Games | Crafting Meaningful Mobile Experiences',
   description:
     'SUJY Games builds high-quality, family-friendly mobile experiences rooted in cultural lore. Play our debut title, Words of Bible — a divine word puzzle journey.',
-  keywords: ['mobile games', 'word puzzle', 'Words of Bible', 'hypercasual', 'Christian games', 'Hindu mythology games', 'SUJY Games'],
+  keywords: ['mobile games', 'word puzzle', 'Words of Bible', 'hypercasual', 'Christian games', 'biblical games', 'SUJY Games'],
   authors: [{ name: 'SUJY Games', url: 'https://sujygames.com' }],
   creator: 'SUJY Games',
   openGraph: {
@@ -38,8 +38,10 @@ export const metadata: Metadata = {
     images: ['/hero_lore.png'],
   },
   icons: {
-    icon: '/logo1.png',
-    apple: '/logo1.png',
+    icon: [
+      { url: '/icon.png', type: 'image/png', sizes: '512x512' },
+    ],
+    apple: '/icon.png',
   },
   metadataBase: new URL('https://sujygames.com'),
 };

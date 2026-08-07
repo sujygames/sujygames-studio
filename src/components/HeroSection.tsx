@@ -100,7 +100,7 @@ export default function HeroSection() {
       >
         <Image
           src="/hero_lore.png"
-          alt="Matsya Avatar and Moses — SUJY Games cultural lore"
+          alt="Words of Bible — heavenly biblical landscape"
           fill
           priority
           className="object-cover opacity-30"

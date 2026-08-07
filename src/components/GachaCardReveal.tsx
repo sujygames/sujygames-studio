@@ -6,31 +6,31 @@ import Image from 'next/image';
 const CARDS = [
   {
     id: 'moses',
-    name: 'Moses the Prophet',
+    name: 'Moses — Parting the Sea',
     era: 'Old Testament',
     rarity: 'Legendary',
-    description: 'Led the Israelites out of Egypt. Received the Ten Commandments atop Mount Sinai.',
-    image: '/card_moses.png',
+    description: 'By faith, Moses stretched out his hand over the sea and the Lord drove it back — the waters parted and Israel walked through on dry ground.',
+    image: '/card_moses.jpg',
     color: '#D4AF37',
     glowColor: 'rgba(212,175,55,0.6)',
   },
   {
-    id: 'matsya',
-    name: 'Matsya Avatar',
-    era: 'Satya Yuga',
+    id: 'david',
+    name: "David's Sling & Five Stones",
+    era: 'Old Testament',
     rarity: 'Mythic',
-    description: 'First avatar of Vishnu. The cosmic fish that saved the Vedas from the great flood.',
-    image: '/card_matsya.png',
+    description: "Armed with faith and five smooth stones, young David stood before Goliath — and with God's strength, felled the giant with a single shot.",
+    image: '/card_david.jpg',
     color: '#06b6d4',
     glowColor: 'rgba(6,182,212,0.5)',
   },
   {
     id: 'creation',
-    name: 'The Creation',
+    name: 'Dawn of Creation',
     era: 'Genesis',
     rarity: 'Divine',
-    description: 'The eternal moment when divine breath brought life into the cosmos.',
-    image: '/card_creation.png',
+    description: 'In the beginning God created the heavens and the earth. Light burst forth from darkness, and all was good.',
+    image: '/card_creation.jpg',
     color: '#a78bfa',
     glowColor: 'rgba(167,139,250,0.5)',
   },
@@ -87,10 +87,10 @@ export default function GachaCardReveal() {
             Gacha Collection
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold text-white mb-4">
-            Unlock Cultural Lore
+            Unlock Biblical Lore
           </h2>
           <p className="text-gray-400 max-w-xl mx-auto">
-            Collect beautifully illustrated 3D cards featuring divine beings from world mythology and scripture.
+            Collect beautifully illustrated 3D cards featuring legendary figures and sacred moments from scripture.
           </p>
         </motion.div>
 
@@ -242,7 +242,7 @@ export default function GachaCardReveal() {
                   <>
                     <h3 className="text-2xl font-heading font-bold text-white mb-3">Divine Collection</h3>
                     <p className="text-gray-400 leading-relaxed mb-6">
-                      Tap the card to reveal a legendary cultural artifact. Each card tells the story of a sacred being from scripture and mythology.
+                      Tap the card to reveal a legendary biblical moment. Each card tells the sacred story of a hero from scripture.
                     </p>
                     <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
                       {CARDS.map((c) => (
