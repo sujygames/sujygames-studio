@@ -161,8 +161,15 @@ export default function GachaCardReveal() {
                   >
                     <Image src={card.image} alt={card.name} fill className="object-cover" sizes="256px" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
-                    {/* Rarity badge */}
-                    <div className="absolute top-3 right-3 px-2 py-1 rounded-full text-xs font-bold" style={{ backgroundColor: RARITY_COLORS[card.rarity] + '33', color: RARITY_COLORS[card.rarity], border: `1px solid ${RARITY_COLORS[card.rarity]}66` }}>
+                    {/* Rarity badge — fully opaque so it's always readable over the image */}
+                    <div
+                      className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-xs font-bold tracking-wide shadow-lg"
+                      style={{
+                        backgroundColor: RARITY_COLORS[card.rarity],
+                        color: '#071022',
+                        boxShadow: `0 0 12px ${RARITY_COLORS[card.rarity]}99`,
+                      }}
+                    >
                       {card.rarity}
                     </div>
                     {/* Card info */}

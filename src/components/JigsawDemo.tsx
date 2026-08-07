@@ -64,9 +64,10 @@ export default function JigsawDemo() {
 
       <div
         className="relative rounded-xl p-1.5 border border-white/10 bg-[#071022]"
-        style={{ display: 'grid', gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)`, gap: '4px', width: '252px', height: '252px' }}
+        style={{ display: 'grid', gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)`, gap: '4px', width: '252px', height: '252px', touchAction: 'none', WebkitUserSelect: 'none' }}
         role="group"
         aria-label="Jigsaw puzzle grid"
+        onTouchStart={(e) => e.preventDefault()}
       >
         {pieces.map((pieceId, slotIndex) => {
           const col = pieceId % GRID_SIZE;

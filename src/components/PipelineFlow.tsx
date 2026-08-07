@@ -9,7 +9,8 @@ const NODES = [
     icon: '💡',
     color: '#D4AF37',
     glow: 'rgba(212,175,55,0.4)',
-    tooltip: 'Market research, cultural theme ideation, and game concept validation using player data signals.',
+    description: 'Market research, cultural theme ideation, and game concept validation using player data signals.',
+    detail: '⚡ 48h concept-to-prototype · Player data from 50K+ sessions drives theme selection.',
     x: 50, y: 10,
   },
   {
@@ -18,7 +19,8 @@ const NODES = [
     icon: '🎨',
     color: '#60a5fa',
     glow: 'rgba(96,165,250,0.4)',
-    tooltip: 'Generative AI pipelines produce 100+ unique character illustrations, backgrounds & UI assets per sprint.',
+    description: 'Generative AI pipelines produce 100+ unique character illustrations, backgrounds & UI assets per sprint.',
+    detail: '🖼 Stable Diffusion + ControlNet · Style-locked to each game\'s cultural theme.',
     x: 50, y: 32,
   },
   {
@@ -27,7 +29,8 @@ const NODES = [
     icon: '⚙️',
     color: '#34d399',
     glow: 'rgba(52,211,153,0.4)',
-    tooltip: 'Algorithmic level generator creates thousands of balanced puzzles. Difficulty curves tuned by engagement metrics.',
+    description: 'Algorithmic level generator creates thousands of balanced puzzles. Difficulty curves tuned by engagement metrics.',
+    detail: '🧮 1,000+ levels generated per game · Adaptive difficulty via real-time retention data.',
     x: 50, y: 54,
   },
   {
@@ -36,7 +39,8 @@ const NODES = [
     icon: '📊',
     color: '#f472b6',
     glow: 'rgba(244,114,182,0.4)',
-    tooltip: 'Real-time retention loops, A/B tests, seasonal events and gacha drops — all automated and data-driven.',
+    description: 'Real-time retention loops, A/B tests, seasonal events and gacha drops — all automated and data-driven.',
+    detail: '📈 A/B tested push cadence · Seasonal gacha events auto-scheduled 30 days out.',
     x: 50, y: 76,
   },
 ];
@@ -96,7 +100,7 @@ export default function PipelineFlow() {
                   }}
                   role="button"
                   tabIndex={0}
-                  aria-label={`${node.label}: ${node.tooltip}`}
+                  aria-label={`${node.label} — hover for more details`}
                 >
                   {/* Glow on hover */}
                   <div
@@ -125,7 +129,7 @@ export default function PipelineFlow() {
 
                     <div className="flex-1 min-w-0">
                       <div className="font-heading font-bold text-white text-lg">{node.label}</div>
-                      <div className="text-xs text-gray-400 leading-relaxed mt-1">{node.tooltip}</div>
+                      <div className="text-xs text-gray-400 leading-relaxed mt-1">{node.description}</div>
                     </div>
 
                     {/* Step number */}
@@ -139,14 +143,14 @@ export default function PipelineFlow() {
                   </div>
                 </div>
 
-                {/* Tooltip (desktop hover) */}
+                {/* Hover tooltip — shows unique detail NOT in the card body */}
                 <div
-                  className="absolute left-full top-1/2 -translate-y-1/2 ml-4 w-56 p-3 rounded-xl bg-[#0f2040] border border-white/10 text-sm text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-20 hidden lg:block"
+                  className="absolute left-full top-1/2 -translate-y-1/2 ml-4 w-60 p-3 rounded-xl bg-[#0f2040] border border-white/10 text-sm text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-20 hidden lg:block"
                   role="tooltip"
                   aria-hidden="true"
                 >
-                  <div className="font-bold mb-1" style={{ color: node.color }}>{node.label}</div>
-                  {node.tooltip}
+                  <div className="font-bold mb-1.5" style={{ color: node.color }}>{node.label}</div>
+                  <div className="text-xs leading-relaxed">{node.detail}</div>
                 </div>
               </motion.div>
 

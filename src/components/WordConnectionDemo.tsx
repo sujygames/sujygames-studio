@@ -5,12 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 const GRID_SIZE = 6;
 const WORDS = ['FAITH', 'GRACE', 'PSALM', 'LOVE', 'EDEN'];
 
-// 6×6 grid — all 5 words in straight lines
-// FAITH → row 0, cols 0–4 (→ horizontal)
-// GRACE → col 5, rows 1–5 (↓ vertical)
-// PSALM → row 5, cols 0–4 (→ horizontal)
-// LOVE  → col 0, rows 1–4 (↓ vertical)
-// EDEN  → row 2, cols 1–4 (→ horizontal)
 const INITIAL_GRID: string[][] = [
   ['F', 'A', 'I', 'T', 'H', 'K'],
   ['L', 'Q', 'X', 'B', 'Z', 'G'],
@@ -51,12 +45,12 @@ export default function WordConnectionDemo() {
   const [sparkle, setSparkle] = useState<string | null>(null);
   const [showHints, setShowHints] = useState(false);
 
-  // Refs for drag-to-select — avoids stale closure issues
   const isDragging = useRef(false);
   const dragCells = useRef<string[]>([]);
   const foundRef = useRef<Set<string>>(new Set());
+  // Map from pointerId → captured element, for multi-touch safety
+  const gridRef = useRef<HTMLDivElement>(null);
 
-  // Keep foundRef in sync
   useEffect(() => { foundRef.current = found; }, [found]);
 
   const getWordForCells = useCallback((cells: string[]): string | null => {
@@ -87,7 +81,7 @@ export default function WordConnectionDemo() {
     isDragging.current = false;
   }, [getWordForCells]);
 
-  // Global pointerup — fires even if pointer leaves the component
+  // Global pointerup fires even if pointer leaves component
   useEffect(() => {
     const onUp = () => {
       if (isDragging.current) submitSelection();
@@ -105,23 +99,49 @@ export default function WordConnectionDemo() {
     return 'transparent';
   };
 
-  const handlePointerDown = (r: number, c: number, e: React.PointerEvent) => {
-    e.preventDefault();
-    isDragging.current = true;
-    const key = `${r},${c}`;
-    dragCells.current = [key];
-    setSelected(new Set([key]));
+  const getCellCoords = (clientX: number, clientY: number): string | null => {
+    if (!gridRef.current) return null;
+    const rect = gridRef.current.getBoundingClientRect();
+    const relX = clientX - rect.left;
+    const relY = clientY - rect.top;
+    if (relX < 0 || relY < 0 || relX > rect.width || relY > rect.height) return null;
+    const cellW = rect.width / GRID_SIZE;
+    const cellH = rect.height / GRID_SIZE;
+    const col = Math.floor(relX / cellW);
+    const row = Math.floor(relY / cellH);
+    if (col < 0 || col >= GRID_SIZE || row < 0 || row >= GRID_SIZE) return null;
+    return `${row},${col}`;
   };
 
-  const handlePointerEnter = (r: number, c: number) => {
+  // Unified pointer handlers on the grid container — works for mouse and touch
+  const handleGridPointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    // Capture pointer so subsequent move events come here even if cursor leaves
+    (e.currentTarget as HTMLDivElement).setPointerCapture(e.pointerId);
+    isDragging.current = true;
+    const key = getCellCoords(e.clientX, e.clientY);
+    if (key) {
+      dragCells.current = [key];
+      setSelected(new Set([key]));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleGridPointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
     if (!isDragging.current) return;
-    const key = `${r},${c}`;
-    // Only add if not already in the list
-    if (!dragCells.current.includes(key)) {
+    e.preventDefault();
+    const key = getCellCoords(e.clientX, e.clientY);
+    if (key && !dragCells.current.includes(key)) {
       dragCells.current = [...dragCells.current, key];
       setSelected(new Set(dragCells.current));
     }
-  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleGridPointerUp = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    if (isDragging.current) submitSelection();
+  }, [submitSelection]);
 
   const allFound = found.size === WORDS.length;
 
@@ -133,7 +153,7 @@ export default function WordConnectionDemo() {
         <span className="text-[#D4AF37]">{found.size}</span> found
       </div>
 
-      {/* Grid */}
+      {/* Grid — all pointer events handled at container level for reliable mobile touch */}
       <motion.div
         animate={shake ? { x: [-6, 6, -4, 4, 0] } : { x: 0 }}
         transition={{ duration: 0.35 }}
@@ -141,12 +161,18 @@ export default function WordConnectionDemo() {
         aria-label="Word search grid"
       >
         <div
-          className="grid p-2 rounded-xl bg-[#071022] border border-white/10"
+          ref={gridRef}
+          className="grid p-2 rounded-xl bg-[#071022] border border-white/10 select-none"
           style={{
             gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)`,
             gap: '5px',
-            touchAction: 'none',
+            touchAction: 'none',  // Prevent scroll hijack on mobile
+            WebkitUserSelect: 'none',
+            cursor: 'crosshair',
           }}
+          onPointerDown={handleGridPointerDown}
+          onPointerMove={handleGridPointerMove}
+          onPointerUp={handleGridPointerUp}
         >
           {INITIAL_GRID.map((row, r) =>
             row.map((letter, c) => {
@@ -159,7 +185,7 @@ export default function WordConnectionDemo() {
                 <div
                   key={key}
                   aria-label={`Letter ${letter}`}
-                  className="relative flex items-center justify-center rounded-lg font-bold text-sm cursor-pointer select-none transition-all duration-150"
+                  className="relative flex items-center justify-center rounded-lg font-bold text-sm select-none transition-all duration-150"
                   style={{
                     width: '38px',
                     height: '38px',
@@ -170,11 +196,9 @@ export default function WordConnectionDemo() {
                     color: bg !== 'transparent' ? bg : '#9ca3af',
                     transform: isSelected && !isFound ? 'scale(1.12)' : 'scale(1)',
                     boxShadow: isSelected && !isFound ? `0 0 12px ${bg !== 'transparent' ? bg : '#D4AF37'}60` : 'none',
-                    touchAction: 'none',
+                    pointerEvents: 'none', // Let the grid container handle all events
                     fontFamily: 'var(--font-poppins), sans-serif',
                   }}
-                  onPointerDown={e => handlePointerDown(r, c, e)}
-                  onPointerEnter={() => handlePointerEnter(r, c)}
                 >
                   {letter}
                 </div>
@@ -193,7 +217,7 @@ export default function WordConnectionDemo() {
             className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold tracking-wider"
             style={{
               backgroundColor: found.has(word) ? WORD_COLORS[word] + '20' : 'rgba(255,255,255,0.04)',
-              color: found.has(word) ? WORD_COLORS[word] : '#374151',
+              color: found.has(word) ? WORD_COLORS[word] : '#6b7280',
               border: `1.5px solid ${found.has(word) ? WORD_COLORS[word] + '70' : 'rgba(255,255,255,0.08)'}`,
             }}
             animate={sparkle === word ? { scale: [1, 1.25, 1], y: [0, -5, 0] } : {}}
